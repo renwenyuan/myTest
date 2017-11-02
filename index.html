@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>随机出题</title>
+    <!--<script src="https://unpkg.com/vue"></script>-->
+    <script src="js/vue.js"></script>
+    <meta charset="utf-8">
+</head>
+<body>
+<div id="app">
+
+    <select v-model="questions">
+        <option v-for="subject in subjects" :value="subject.questions">
+            {{subject.name}}
+        </option>
+    </select>
+
+    <select v-model="section">
+        <option v-for="section in sections" :value="section.code">
+            {{section.name}}
+        </option>
+    </select>
+
+    <div v-for="question in filteredQuestions">
+        <p v-html="question.content"></p>
+        <ul>
+            <li v-for="choice in question.choices">
+                {{choice.content}}
+            </li>
+        </ul>
+    </div>
+
+    <fieldset>
+        <legend>随机题目
+            <button @click="refreshRandom">出题</button>
+        </legend>
+        <div v-if="question">
+            <p v-html="question.content"></p>
+            <ul>
+                <li v-for="choice in question.choices">
+                    {{choice.content}}
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+
+
+</div>
+
+<script src="js/paper.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            subjects: SUBJECT_DATA,
+            sections: SECTION_DATA,
+            section: SECTION_DATA[0].code,
+            questions: SUBJECT_DATA[0].questions,
+            question: null,
+        },
+        methods: {
+            makeRandom: function () {
+                var vm = this
+                return vm.filteredQuestions[Math.floor(Math.random() * vm.filteredQuestions.length)]
+            },
+            refreshRandom: function () {
+                var vm = this
+                vm.question = vm.makeRandom()
+            }
+        },
+        computed: {
+            filteredQuestions: function () {
+                var vm = this;
+                return this.questions.filter(function (q) {
+                    return q.section == vm.section
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>
