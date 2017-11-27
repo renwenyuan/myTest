@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>随机出题</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <!--<script src="https://unpkg.com/vue"></script>-->
+    <script src="js/vue.js"></script>
+    <meta charset="utf-8">
+</head>
+<body>
+<div id="app">
+
+
+    <div class="paper_container">
+        <!--打印按钮-->
+        <button class="pt_print" v-if="filteredQuestions.length>0&&isshowDownBtn" @click="printPaper()">打印</button>
+        <div style="padding:20px 40px">
+            <template v-if="filteredQuestions&&filteredQuestions.length>0">
+                <p v-html="filteredQuestions[0].content"></p>
+                <ul v-if="filteredQuestions[0].choices.length>0">
+                    <li v-for="choice in filteredQuestions[0].choices">
+                        {{choice.id}}、{{choice.content}}
+                    </li>
+                </ul>
+            </template>
+            <template v-else>
+                暂无试题
+            </template>
+        </div>
+
+
+    </div>
+
+    <!--<fieldset style="margin-top:40px;">-->
+    <!--<legend>随机题目-->
+    <!--<button @click="refreshRandom">出题</button>-->
+    <!--</legend>-->
+    <!--<div v-if="question">-->
+    <!--<p v-html="question.content"></p>-->
+    <!--<ul>-->
+    <!--<li v-for="choice in question.choices">-->
+    <!--{{choice.content}}-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</fieldset>-->
+</div>
+
+
+</div>
+
+<script src="js/paper.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            subjects: SUBJECT_DATA,
+            questions: null,
+            question: null,
+            filteredQuestions: null,
+            theRequest: null,
+            isshowDownBtn: true
+        },
+        methods: {
+            printPaper: function () {
+                const vm = this
+                window.print();
+
+            },
+            //获取href中携带的参数
+            getHregQuery: function () {
+                const vm = this
+                var url = location.search
+                console.log('1', url)
+                vm.theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    var strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        vm.theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
+                    }
+                    console.log('2', vm.theRequest.quesNum)
+
+                }
+                return vm.theRequest;
+
+            }
+//            makeRandom: function () {
+//                var vm = this
+//                return vm.filteredQuestions[Math.floor(Math.random() * vm.filteredQuestions.length)]
+//            },
+//            refreshRandom: function () {
+//                var vm = this
+//                vm.question = vm.makeRandom()
+//            }
+        },
+        created: function () {
+            const vm = this
+            vm.getHregQuery()
+            //筛选出对应学科的所有试题
+            vm.questions = vm.subjects.find(function (t) {
+                return t.subjectCode == vm.theRequest.subjectCode
+            })
+            //筛选出对应学段的所有试题
+            vm.question = vm.questions.questions.filter(function (q) {
+                return q.section == vm.theRequest.section
+            })
+            //筛选出对应题号的试题
+            vm.filteredQuestions = vm.question.filter(function (t, index) {
+                return index + 1 == vm.theRequest.quesNum
+            })
+        },
+        computed: {
+//            filteredQuestions: function () {
+//                var vm = this;
+//                return vm.questions.questions.filter(function (q) {
+//                    return q.id == vm.theRequest.quesNum
+//                })
+//            }
+        }
+    })
+</script>
+</body>
+</html>

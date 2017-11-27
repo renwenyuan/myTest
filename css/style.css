@@ -1,0 +1,136 @@
+@charset "UTF-8";
+*{
+    padding:0;
+    margin:0;
+}
+li{
+    list-style: none;
+}
+body{
+    overflow: hidden;
+
+}
+select{
+    width:70px;
+    height:25px;
+    margin-right: 15px;
+    text-align-last: center;
+}
+.pt_header_banner{
+    height: 38px;
+    line-height: 38px;
+    background-color: #535353;
+    color: #fff;
+}
+.pt_header{
+    width:1200px;
+    margin:0 auto;
+}
+.pt_grade_select{
+    float:right;
+    display: inline;
+    height:20px;
+}
+.pt_container{
+    position:relative;
+    width:100%;
+    background:url(../imgs/body_bg.jpg) 0px 0px repeat-x #000;
+}
+
+.pt_content{
+    background:url(../imgs/main_bg.jpg) top center no-repeat;
+    height:1000px;
+}
+.num_mask{
+    background:url(../imgs/num_mask.png) 0px 0px no-repeat;
+    height:184px;
+    width:740px;
+    position:absolute;
+    left:50%;
+    top:340px;
+    margin-left:-370px;
+    z-index:9;
+}
+.num_box{
+    height:450px;
+    width:750px;
+    position:absolute;
+    left:50%;
+    top:340px;
+    margin-left:-370px;
+    z-index:8;
+    overflow:hidden;
+    text-align:center;
+}
+.num{
+    background:url(../imgs/num.png) top center repeat-y;
+    width:181px;
+    height:265px;
+    float:left;
+    margin-right:6px;
+}
+.btn{
+    background:url(../imgs/btn_start.png) 0px 0px no-repeat;
+    width:264px;
+    height:89px;
+    position:absolute;
+    left:50%;bottom:50px;
+    margin-left:-132px;
+    cursor:pointer;
+    clear:both;
+}
+.pt_result{
+    height:184px;
+    width:740px;
+    position:absolute;
+    left:50%;
+    top:290px;
+    margin-left:-370px;
+    z-index:9;
+    color: #fff;
+}
+.pt_watch_ques{
+    display: inline-block;
+    margin-left:30px;
+    padding:4px 15px;
+    background-color: #eeeeee;
+    border-radius: 3px;
+    color: #000;
+    cursor:pointer;
+}
+
+/*查看试题页面*/
+.paper_container{
+    position: relative;
+    width:1000px;
+    margin:0 auto;
+    padding-top:100px;
+}
+.pt_print{
+    position:absolute;
+    display: inline-block;
+    top:30px;
+    left:50%;
+    width: 98px;
+    height:34px;
+    background-color: #eee;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    cursor:pointer;
+}
+.pt_print:hover{
+    background-color:#00c3a3;
+    color: #fff;
+
+}
+
+@media print {
+    .pt_print {
+        display: none;
+    }
+    @page
+    {
+        size: auto;   /* auto is the initial value */
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+}

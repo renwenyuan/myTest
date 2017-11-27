@@ -2,52 +2,56 @@
 <html>
 <head>
     <title>随机出题</title>
-    <!--<script src="https://unpkg.com/vue"></script>-->
+    <link rel="stylesheet" href="./css/style.css">
     <script src="js/vue.js"></script>
+
     <meta charset="utf-8">
 </head>
 <body>
 <div id="app">
+    <div class="pt_header_banner">
+        <div class="pt_header">
+            <span>您好，欢迎来到……</span>
+            <form class="pt_grade_select">
+                <select v-model="subject">
+                    <option v-for="subject in subjects" :value="subject.subjectCode">
+                        {{subject.name}}
+                    </option>
+                </select>
 
-    <select v-model="questions">
-        <option v-for="subject in subjects" :value="subject.questions">
-            {{subject.name}}
-        </option>
-    </select>
-
-    <select v-model="section">
-        <option v-for="section in sections" :value="section.code">
-            {{section.name}}
-        </option>
-    </select>
-
-    <div v-for="question in filteredQuestions">
-        <p v-html="question.content"></p>
-        <ul>
-            <li v-for="choice in question.choices">
-                {{choice.content}}
-            </li>
-        </ul>
-    </div>
-
-    <fieldset>
-        <legend>随机题目
-            <button @click="refreshRandom">出题</button>
-        </legend>
-        <div v-if="question">
-            <p v-html="question.content"></p>
-            <ul>
-                <li v-for="choice in question.choices">
-                    {{choice.content}}
-                </li>
-            </ul>
+                <select v-model="section">
+                    <option v-for="section in sections" :value="section.code">
+                        {{section.name}}
+                    </option>
+                </select>
+            </form>
         </div>
-    </fieldset>
+    </div>
+    <div class="pt_container">
+        <div class="pt_content">
+            <div id="res" v-if="res" class="pt_result">
+                <span>恭喜您抽到的题目编号是：{{res}}</span>
+                <a class="pt_watch_ques" :href="getHref()">查看试题</a>
+            </div>
+            <div class="num_mask"></div>
+            <div class="num_box">
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="btn" @click="startSelNum()"></div>
+            </div>
+        </div>
+    </div>
 
 
 </div>
 
 <script src="js/paper.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.2-min.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="js/lodash.min.js"></script>
+
 <script>
     new Vue({
         el: '#app',
@@ -55,27 +59,60 @@
             subjects: SUBJECT_DATA,
             sections: SECTION_DATA,
             section: SECTION_DATA[0].code,
-            questions: SUBJECT_DATA[0].questions,
-            question: null,
+            subject: SUBJECT_DATA[0].subjectCode,
+            isBegin: false,
+            res: null
         },
         methods: {
-            makeRandom: function () {
-                var vm = this
-                return vm.filteredQuestions[Math.floor(Math.random() * vm.filteredQuestions.length)]
+            numRand: function () {
+                const vm = this
+                var x = 0002; //上限
+                var y = 0001; //下限
+                var rand = parseInt(Math.random() * (x - y + 1) + y);
+                return rand;
             },
-            refreshRandom: function () {
-                var vm = this
-                vm.question = vm.makeRandom()
+            getHref: function () {
+                const vm = this
+                return 'WatchPaper.html?quesNum=' + vm.res + '&section=' + vm.section + '&subjectCode=' + vm.subject
+            },
+            startSelNum: function () {
+
+                const vm = this
+                if (vm.isBegin) {
+                    return false;
+                }
+
+                vm.res = null
+                var u = 265;
+                vm.isBegin = true
+                $(".num").css('backgroundPositionY', 0);
+                var result = vm.numRand();
+                var resultString = result
+
+//                $('#res').text('恭喜您，您抽到的试题试题编号为 = ' + resultString);
+                if (resultString < 10 && resultString > 0) {
+                    resultString = '0' + resultString
+                }
+                var num_arr = ('0' + '0' + resultString).split('');
+                console.log(num_arr)
+                $(".num").each(function (index) {
+                    var _num = $(this);
+                    setTimeout(function () {
+                        _num.animate({
+                            backgroundPositionY: (u * 60) - (u * num_arr[index])
+                        }, {
+                            duration: index * 2000,
+                            easing: "easeInOutCirc",
+                            complete: _.debounce(function () {
+                                if (index == 3) vm.isBegin = false;
+                                vm.res = result
+                            }, 5000)
+                        });
+                    }, index * 50);
+                });
             }
         },
-        computed: {
-            filteredQuestions: function () {
-                var vm = this;
-                return this.questions.filter(function (q) {
-                    return q.section == vm.section
-                })
-            }
-        }
+        computed: {}
     })
 </script>
 </body>

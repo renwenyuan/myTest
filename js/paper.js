@@ -19,12 +19,13 @@ var SECTION_DATA = [
 var SUBJECT_DATA = [
     {
         "name": '语文',
+        "subjectCode":'C',
         "questions": [
             {
                 "id": 1,
                 "section": "P",// 小学（primary） P 中学（junior）J 高中（sunior） S
                 "title": "【课堂调查】信息时代的教育自信",
-                "content": "你选择成为华师师范生的原因是什么？<img src='imgs/timg@image.jpg'>",
+                "content": "你选择成为华师师范生的原因是什么？",
                 "images": [],
                 "choices": [
                     {
@@ -154,6 +155,50 @@ var SUBJECT_DATA = [
                 "type": "1",
                 "require": false
             }
+        ]
+    },
+    {
+        "name": '数学',
+        "subjectCode":'M',
+
+        "questions": [
+            {
+                "id": 1,
+                "section": "P",// 小学（primary） P 中学（junior）J 高中（sunior） S
+                "title": "1+11",
+                "content": "1+11",
+                "images": [],
+                "choices": [
+
+                ],
+                "type": "2",
+                "require": false
+            },
+            {
+                "id": 2,
+                "section": "J",// 小学（primary） P 中学（junior）J 高中（sunior） S
+                "title": "2",
+                "content": "22*5",
+                "images": [],
+                "choices": [
+
+                ],
+                "type": "2",
+                "require": true
+            },
+            {
+                "id": 3,
+                "section": "S",// 小学（primary） P 中学（junior）J 高中（sunior） S
+                "title": "3",
+                "content": "99*99",
+                "images": [],
+                "choices": [
+
+                ],
+                "type": "2",
+                "require": true
+            },
+
         ]
     },
 ]
