@@ -6,10 +6,10 @@
 li{
     list-style: none;
 }
-body{
-    overflow: hidden;
+/*body{*/
+    /*overflow: hidden;*/
 
-}
+/*}*/
 select{
     width:70px;
     height:25px;
