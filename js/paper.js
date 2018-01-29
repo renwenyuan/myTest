@@ -135,7 +135,7 @@ var SUBJECT_DATA = [
             },
             {
                 "id": 5,
-                "section": "J",// 小学（primary） P 中学（junior）J 高中（sunior） S
+                "section": "S",// 小学（primary） P 中学（junior）J 高中（sunior） S
                 "content": "下列有关文学常识及课文内容的表述正确的一项是（     ）",
                 "images": [],
                 "choices": [
@@ -369,7 +369,7 @@ var SUBJECT_DATA = [
             },
             {
                 "id": 17,
-                "section": "J",// 小学（primary） P 中学（junior）J 高中（sunior） S
+                "section": "S",// 小学（primary） P 中学（junior）J 高中（sunior） S
                 "content": "一条公路甲队独修需24天，乙队需40天，若甲、乙两队同时分别从两端开始修，(     )天后可将全部修完。",
                 "images": [],
                 "choices": [
