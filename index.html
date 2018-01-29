@@ -11,7 +11,7 @@
 <div id="app">
     <div class="pt_header_banner">
         <div class="pt_header">
-            <span>您好，欢迎来到……</span>
+            <!--<span>您好，欢迎来到……</span>-->
             <form class="pt_grade_select">
                 <select v-model="subject">
                     <option v-for="subject in subjects" :value="subject.subjectCode">
@@ -66,7 +66,7 @@
         methods: {
             numRand: function () {
                 const vm = this
-                var x = 0002; //上限
+                var x = 0008; //上限
                 var y = 0001; //下限
                 var rand = parseInt(Math.random() * (x - y + 1) + y);
                 return rand;
