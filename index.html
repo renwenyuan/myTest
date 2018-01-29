@@ -13,15 +13,14 @@
         <div class="pt_header">
             <!--<span>您好，欢迎来到……</span>-->
             <form class="pt_grade_select">
-                <select v-model="subject">
-                    <option v-for="subject in subjects" :value="subject.subjectCode">
-                        {{subject.name}}
-                    </option>
-                </select>
-
                 <select v-model="section">
                     <option v-for="section in sections" :value="section.code">
                         {{section.name}}
+                    </option>
+                </select>
+                <select v-model="subject">
+                    <option v-for="subject in subjects" :value="subject.subjectCode">
+                        {{subject.name}}
                     </option>
                 </select>
             </form>
